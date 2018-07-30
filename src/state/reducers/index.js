@@ -1,8 +1,8 @@
-import { CELSIUS_ENTERED } from '..'
+import { CELSIUS_ENTERED, FAHRENHEIT_ENTERED } from '..'
 
 const initialState = {
   celsius: '',
-  fahrenheit: undefined
+  fahrenheit: ''
 }
 
 function rootReducer (state = initialState, { payload = {}, type }) {
@@ -11,9 +11,15 @@ function rootReducer (state = initialState, { payload = {}, type }) {
       console.log(payload)
       return {
         ...state,
+        fahrenheit: '',
         celsius: payload
       }
-
+    case FAHRENHEIT_ENTERED:
+      return {
+        ...state,
+        celsius: '',
+        fahrenheit: payload
+      }
     default:
       return state
   }

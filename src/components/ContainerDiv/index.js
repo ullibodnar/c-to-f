@@ -2,16 +2,19 @@ import styled from 'styled-components'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getFahrenheit } from '../../utilities'
+import { getFahrenheit, getCelsius } from '../../utilities'
 
-import { getCelsiusInput, celsiusEntered } from '../../state'
+import {
+  getCelsiusInput,
+  celsiusEntered,
+  getFahrenheitInput,
+  fahrenheitEntered
+} from '../../state'
 
 const StyledContainer = styled.div`
-  width: 40%;
+  width: 100%;
   height: 400px;
   margin: auto;
-  display: inline-block;
-  padding: 10px 10px;
   font-size: 18px;
 `
 StyledContainer.displayName = 'StyledContainer'
@@ -20,22 +23,54 @@ const StyledInput = styled.input`
   padding: 10px;
   font-size: 18px;
   transition: all .2s ease;
- 
-  &:focus {
-    font-size: 30px;
-  }
+  display: block;
+  width: 100%;
 `
 StyledInput.displayName = 'StyledInput'
 
-export function ContainerDiv ({ celsius, enterCelsius }) {
+const StyledFehrenheitInput = StyledInput.extend`
+
+`
+StyledFehrenheitInput.displayName = 'StyledFehrenheitInput'
+
+const StyledCelsiusInput = StyledInput.extend`
+
+`
+StyledCelsiusInput.displayName = 'StyledCelsiusInput'
+
+const StyledEquals = styled.p`
+  font-size: 100px;
+`
+StyledEquals.displayName = 'StyledEquals'
+
+export function ContainerDiv ({
+  celsius,
+  enterCelsius,
+  fahrenheit,
+  enterFahrenheit
+}) {
   return (
     <div>
       <StyledContainer>
-        <StyledInput
-          placeholder={'Input Celsius'}
+        <h3>Fahrenheit:</h3>
+        <StyledFehrenheitInput
+          placeholder={
+            getFahrenheit(celsius) === 'Please enter a number'
+              ? 'Input Fahrenheit'
+              : getFahrenheit(celsius)
+          }
+          onChange={e => enterFahrenheit(e.target.value)}
+        />
+        <StyledEquals>=</StyledEquals>
+        <h3>Celsius:</h3>
+        <StyledCelsiusInput
+          placeholder={
+            getCelsius(fahrenheit) === 'Please enter a number'
+              ? 'Input Celsius'
+              : getCelsius(fahrenheit)
+          }
           onChange={e => enterCelsius(e.target.value)}
         />
-        <p>{getFahrenheit(celsius)}</p>
       </StyledContainer>
     </div>
   )
@@ -43,15 +78,18 @@ export function ContainerDiv ({ celsius, enterCelsius }) {
 
 function mapStateToProps (state) {
   return {
-    celsius: getCelsiusInput(state)
+    celsius: getCelsiusInput(state),
+    fahrenheit: getFahrenheitInput(state)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    enterCelsius: temperature => {
-      console.log(temperature)
+    enterCelsius (temperature) {
       dispatch(celsiusEntered(temperature))
+    },
+    enterFahrenheit (temperature) {
+      dispatch(fahrenheitEntered(temperature))
     }
   }
 }
