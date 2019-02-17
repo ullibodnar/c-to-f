@@ -22,20 +22,16 @@ StyledContainer.displayName = 'StyledContainer'
 const StyledInput = styled.input`
   padding: 10px;
   font-size: 18px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   display: block;
   width: 100%;
 `
 StyledInput.displayName = 'StyledInput'
 
-const StyledFehrenheitInput = StyledInput.extend`
-
-`
+const StyledFehrenheitInput = StyledInput.extend``
 StyledFehrenheitInput.displayName = 'StyledFehrenheitInput'
 
-const StyledCelsiusInput = StyledInput.extend`
-
-`
+const StyledCelsiusInput = StyledInput.extend``
 StyledCelsiusInput.displayName = 'StyledCelsiusInput'
 
 const StyledEquals = styled.p`
@@ -60,6 +56,7 @@ export function ContainerDiv ({
               : getFahrenheit(celsius)
           }
           onChange={e => enterFahrenheit(e.target.value)}
+          value={fahrenheit}
         />
         <StyledEquals>=</StyledEquals>
         <h3>Celsius:</h3>
@@ -70,6 +67,7 @@ export function ContainerDiv ({
               : getCelsius(fahrenheit)
           }
           onChange={e => enterCelsius(e.target.value)}
+          value={celsius}
         />
       </StyledContainer>
     </div>
@@ -94,4 +92,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContainerDiv)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContainerDiv)
