@@ -7,3 +7,5 @@ This project was made with React, Redux, and especially :heart:
 :wink:
 
 Cheers.
+
+*Now [hosted](http://ullibodnar.github.io/c-to-f)!* :sparkles:
